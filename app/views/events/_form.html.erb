@@ -1,0 +1,45 @@
+<%= form_with(model: event, class: "space-y-6") do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-700 p-4 rounded-md" role="alert">
+      <strong class="font-bold"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</strong>
+      <ul class="mt-2 list-disc list-inside">
+        <% event.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, '案件名', class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :title, class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :start_time, '開始日時', class: "block text-sm font-medium text-gray-700" %>
+      <%= form.datetime_select :start_time, {}, { class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" } %>
+    </div>
+    <div>
+      <%= form.label :end_time, '終了日時', class: "block text-sm font-medium text-gray-700" %>
+      <%= form.datetime_select :end_time, {}, { class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" } %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :status, 'ステータス', class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :status, Event.statuses.keys.map { |k| [t("activerecord.attributes.event.statuses.#{k}"), k] }, {}, { class: "mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" } %>
+  </div>
+
+  <div>
+    <%= form.label :files, '添付ファイル', class: "block text-sm font-medium text-gray-700" %>
+    <%= form.file_field :files, multiple: true, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+  </div>
+
+  <%# ... (添付ファイル一覧とチャット機能のHTMLは省略しますが、同様にTailwind CSSで調整可能です) ... %>
+
+  <div class="flex justify-end space-x-2 pt-4">
+    <%= link_to "キャンセル", "#", data: { action: "click->modal#close" }, class: "bg-white hover:bg-gray-100 text-gray-700 font-bold py-2 px-4 border border-gray-300 rounded" %>
+    <%= form.submit class: "bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+<% end %>

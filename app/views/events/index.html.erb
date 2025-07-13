@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h2">案件カレンダー</h1>
+  <div class="btn-group">
+    <%= link_to "案件一覧", list_events_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "案件登録", new_event_path, data: { turbo_frame: "modal" }, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body" data-controller="calendar">
+    <%# FullCalendarがここにレンダリングされます %>
+  </div>
+</div>
